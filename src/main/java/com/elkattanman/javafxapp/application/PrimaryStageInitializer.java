@@ -1,8 +1,11 @@
 package com.elkattanman.javafxapp.application;
 
-import com.elkattanman.javafxapp.controller.WelcomeScreenController;
+import com.elkattanman.javafxapp.controller.LoginController;
+import com.elkattanman.javafxapp.controller.SplashScreen;
+//import com.elkattanman.javafxapp.controller.SplashScreen;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -25,8 +28,9 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.stage;
-        Scene scene = new Scene(fxWeaver.loadView(WelcomeScreenController.class), 400, 300);
+        Scene scene = new Scene(fxWeaver.loadView(SplashScreen.class), 1200, 700);
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 }

@@ -8,7 +8,6 @@ import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.spring.InjectionPointLazyFxControllerAndViewResolver;
 import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
