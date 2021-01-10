@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class LoginController implements Initializable {
 
     private final FxWeaver fxWeaver;
-    
+
     @FXML private AnchorPane rootPane;
     @FXML
     private FontAwesomeIconView closeButton;
@@ -37,7 +38,9 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginAction(){
-        System.out.println("HEllo World");
+        Stage st=(Stage)rootPane.getScene().getWindow();
+        Scene scene=new Scene(fxWeaver.loadView(Home.class));
+        st.setScene(scene);
     }
 
     @FXML
@@ -54,7 +57,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }
     
     

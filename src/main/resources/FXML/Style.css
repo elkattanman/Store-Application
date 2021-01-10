@@ -7,12 +7,11 @@ and open the template in the editor.
     Created on : Dec 20, 2020, 9:10:53 PM
     Author     : mustafa
 */
-
-#homeBTNS :hover {
-    -fx-background-color: #ff895e;
-}
 #P{
     -fx-background-color: #00a75f;
+}
+.homeBTNS:hover{
+    -fx-background-color: #ff895e;
 }
 #txtFld{
     -fx-text-fill: #6ed9a0;
