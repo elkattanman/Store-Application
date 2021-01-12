@@ -7,23 +7,22 @@ package com.elkattanman.javafxapp.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxWeaver;
+
+import static com.elkattanman.javafxapp.util.AssistantUtil.getStage;
+import static com.elkattanman.javafxapp.util.AssistantUtil.loadWindow;
 
 
 @Component
@@ -104,9 +103,7 @@ public class SplashScreen implements Initializable {
                             fadeTransition1.setOnFinished(event5 -> {
                                 //main.closeStage();
                                 System.out.println("------- splash screen is closed --------");
-                                Stage st = (Stage) rootPane.getScene().getWindow();
-                                Scene scene = new Scene(fxWeaver.loadView(LoginController.class), 1200, 700);
-                                st.setScene(scene);
+                                loadWindow(getStage(rootPane), fxWeaver.loadView(LoginController.class));
                             });
 
                         }

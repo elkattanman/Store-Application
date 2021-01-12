@@ -7,8 +7,17 @@ and open the template in the editor.
     Created on : Dec 20, 2020, 9:10:53 PM
     Author     : mustafa
 */
+* {
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+    -fx-primarytext : #B2B2B2;
+    -fx-blue: #1976D2;
+    -fx-red: #FF0000;
+    -fx-color-1:#1976D2;
+}
+
 #P{
-    -fx-background-color: #00a75f;
+    -fx-background-color: -fx-color-1;
 }
 .homeBTNS:hover{
     -fx-background-color: #ff895e;
@@ -20,8 +29,8 @@ and open the template in the editor.
     -fx-text-fill: #6ed9a0;
 }
 #btnConnect{
-    -fx-background-color:#00a75f ;
+    -fx-background-color:-fx-blue ;
 }
 #pane{
-    -fx-background-color: #eceff1
+    -fx-background-color: -fx-primary;
 }

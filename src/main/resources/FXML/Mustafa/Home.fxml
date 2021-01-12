@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="700" prefWidth="1200" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controller.Home">
+<AnchorPane fx:id="rootPane" prefHeight="700" prefWidth="1200"
+            stylesheets="@Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.elkattanman.javafxapp.controller.Mustafa.Home">
 
     <children>
         <AnchorPane fx:id="mainPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0">
@@ -86,7 +88,7 @@
             <children>
                 <ImageView fx:id="drawerImage" fitHeight="28.0" fitWidth="34.0" layoutX="14.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../img/drawer.png" />
+                        <Image url="@../../img/drawer.png" />
                     </image>
                 </ImageView>
                 <FontAwesomeIconView fx:id="closeButton" fill="#ffffff" glyphName="TIMES" layoutX="1288.0" layoutY="35.0" onMouseClicked="#closeButtonAction" size="25" />

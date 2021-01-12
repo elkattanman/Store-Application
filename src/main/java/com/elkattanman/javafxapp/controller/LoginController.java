@@ -1,18 +1,23 @@
 package com.elkattanman.javafxapp.controller;
 
+import com.elkattanman.javafxapp.util.AlertMaker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+
+import static com.elkattanman.javafxapp.util.AssistantUtil.getStage;
+import static com.elkattanman.javafxapp.util.AssistantUtil.loadWindow;
 
 @Component
 @FxmlView("/FXML/Login.fxml")
@@ -21,11 +26,6 @@ public class LoginController implements Initializable {
     private final FxWeaver fxWeaver;
 
     @FXML private AnchorPane rootPane;
-    @FXML
-    private FontAwesomeIconView closeButton;
-
-    @FXML
-    private FontAwesomeIconView minimizeButton;
 
     @FXML
     private JFXTextField txtFld;
@@ -38,9 +38,14 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginAction(){
-        Stage st=(Stage)rootPane.getScene().getWindow();
-        Scene scene=new Scene(fxWeaver.loadView(Home.class));
-        st.setScene(scene);
+        doLogin();
+    }
+    void doLogin(){
+        if (txtFld.getText().equals("admin") && txtPass.getText().equals("123456")) {
+            loadWindow(getStage(rootPane), fxWeaver.loadView(MainController.class));
+        } else {
+            AlertMaker.showSimpleAlert("Email or password not valid", "اسم المستخدم او كلمة المرور خطأ");
+        }
     }
 
     @FXML
@@ -57,7 +62,13 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
     }
-    
-    
+
+
+    public void pressEnter(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            doLogin();
+        }
+    }
 }

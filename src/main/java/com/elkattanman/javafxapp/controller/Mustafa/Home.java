@@ -1,4 +1,4 @@
-package com.elkattanman.javafxapp.controller;
+package com.elkattanman.javafxapp.controller.Mustafa;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -17,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-@FxmlView("/FXML/Home.fxml")
+@FxmlView("/FXML/Mustafa/Home.fxml")
 public class Home implements Initializable {
 
     @FXML

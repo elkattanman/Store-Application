@@ -16,8 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <javafx.version>11.0.2</javafx.version>
-
+        <javafx.version>15.0.1</javafx.version>
     </properties>
 
     <dependencies>
@@ -74,6 +73,13 @@
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
         <!--        End JAVAFx/FXML & FxWeaver dependency-->
 
         <!--        JFoenix -->

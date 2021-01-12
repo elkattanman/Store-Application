@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="25.0" prefWidth="1000.0" style="-fx-border-color: white;" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controller.bars.TitleBarController">
+
+        <children>
+            <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="947.0" layoutY="1.0" onMouseClicked="#minimizeScreen" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="81.0">
+                <image>
+                    <Image url="@/img/icons8_back_64px_1.png" />
+                </image>
+            </ImageView>
+            <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="947.0" layoutY="1.0" onMouseClicked="#fullScreen" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="48.0">
+                <image>
+                    <Image url="@/img/icons8_back_64px_1.png" />
+                </image>
+            </ImageView>
+            <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="977.0" onMouseClicked="#closeScreen" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0">
+                <image>
+                    <Image url="@/img/icons8_shutdown_30px.png" />
+                </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="31.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ahmed Ali Mobile Store" wrappingWidth="130.13671875">
+                <font>
+                    <Font name="Forte" size="12.0" />
+                </font>
+            </Text>
+            <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@/img/icons8_c_drive_40px_1.png" />
+                </image>
+            </ImageView>
+        </children>
+    </AnchorPane>

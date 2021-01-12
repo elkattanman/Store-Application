@@ -1,8 +1,6 @@
 package com.elkattanman.javafxapp.application;
 
-import com.elkattanman.javafxapp.controller.LoginController;
 import com.elkattanman.javafxapp.controller.SplashScreen;
-//import com.elkattanman.javafxapp.controller.SplashScreen;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
