@@ -1,6 +1,7 @@
 package com.elkattanman.javafxapp.controllers.basics.products;
 
 
+import com.elkattanman.javafxapp.controllers.basics.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
@@ -28,6 +29,8 @@ public class ProductAddController implements Initializable {
     @FXML
     private JFXTextField nameTF, typeTF, priceTF;
 
+    private CallBack callBack;
+
     @FXML
     private JFXButton saveButton, cancelButton;
     @FXML
@@ -43,16 +46,21 @@ public class ProductAddController implements Initializable {
         this.productRepository = productRepository;
     }
 
+    private Product myProduct;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
-//        return Product.builder().name(name).type(type).price(price).build();
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
 
-    @FXML
-    private void addProduct(ActionEvent event) {
+    //        return Product.builder().name(name).type(type).price(price).build();
+
+
+    private boolean makeProduct(){
         String name=StringUtils.trimToEmpty(nameTF.getText());
         String type=StringUtils.trimToEmpty(typeTF.getText());
         String priceString=StringUtils.trimToEmpty(priceTF.getText());
@@ -61,20 +69,29 @@ public class ProductAddController implements Initializable {
             price=Double.parseDouble(priceString.isEmpty()?"0":priceString);
         }catch (Exception ex){
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "من فضلك ادخل رقم  فى السعر");
-            return;
+            return false;
         }
         if (name.isEmpty() || type.isEmpty() || priceString.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
-            return;
+            return false;
         }
+        myProduct.setName(name);
+        myProduct.setType(type);
+        myProduct.setPrice(price);
+        return true;
+    }
+
+    @FXML
+    private void addProduct(ActionEvent event) {
+        if (!makeProduct())return;
 
         if (isInEditMode) {
             handleEditOperation();
             return;
         }
-        Product product=Product.builder().name(name).type(type).price(price).build();
-        Product savedProduct = productRepository.save(product);
 
+        Product savedProduct = productRepository.save(myProduct);
+        callBack.callBack(savedProduct);
 //        if (DataHelper.isBookExists(bookID)) {
 //            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
 //            return;
@@ -109,14 +126,13 @@ public class ProductAddController implements Initializable {
 //        }
     }
 
-//    public void inflateUI(BookListController.Book book) {
-//        title.setText(book.getTitle());
-//        id.setText(book.getId());
-//        author.setText(book.getAuthor());
-//        publisher.setText(book.getPublisher());
-//        id.setEditable(false);
-//        isInEditMode = Boolean.TRUE;
-//    }
+    public void inflateUI(Product product) {
+        myProduct=product;
+        nameTF.setText(product.getName());
+        typeTF.setText(product.getType());
+        priceTF.setText(""+product.getPrice());
+        isInEditMode = Boolean.TRUE;
+    }
 
     private void clearEntries() {
         nameTF.clear();
@@ -125,11 +141,8 @@ public class ProductAddController implements Initializable {
     }
 
     private void handleEditOperation() {
-//        BookListController.Book book = new BookListController.Book(title.getText(), id.getText(), author.getText(), publisher.getText(), true);
-//        if (databaseHandler.updateBook(book)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success", "Update complete");
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed", "Could not update data");
-//        }
+        if(!makeProduct())return;
+        Product savedProduct = productRepository.save(myProduct);
+        callBack.callBack(savedProduct);
     }
 }

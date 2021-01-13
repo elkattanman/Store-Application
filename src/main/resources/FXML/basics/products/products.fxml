@@ -49,9 +49,9 @@
                         <contextMenu>
                             <ContextMenu>
                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Refresh" />
-                                    <MenuItem mnemonicParsing="false" text="Edit" />
-                                    <MenuItem mnemonicParsing="false" text="Remove" />
+                                    <MenuItem mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                                    <MenuItem mnemonicParsing="false" onAction="#edit" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" onAction="#remove" text="Remove" />
                                 </items>
                             </ContextMenu>
                         </contextMenu>
