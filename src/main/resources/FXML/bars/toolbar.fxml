@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@/CSS/dark-theme.css" fx:controller="com.elkattanman.javafxapp.controller.bars.ToolbarController"
+      stylesheets="@/CSS/dark-theme.css" fx:controller="com.elkattanman.javafxapp.controllers.bars.ToolbarController"
       prefHeight="445.0" prefWidth="154.0" styleClass="toolbar-container">
 
    <children>

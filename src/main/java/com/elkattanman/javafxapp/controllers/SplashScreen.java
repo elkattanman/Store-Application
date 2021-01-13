@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.elkattanman.javafxapp.controller;
+package com.elkattanman.javafxapp.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.elkattanman.javafxapp.util.AssistantUtil;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import javafx.animation.FadeTransition;
@@ -20,9 +21,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxWeaver;
-
-import static com.elkattanman.javafxapp.util.AssistantUtil.getStage;
-import static com.elkattanman.javafxapp.util.AssistantUtil.loadWindow;
 
 
 @Component
@@ -95,15 +93,15 @@ public class SplashScreen implements Initializable {
 
                         fadeTransition.setOnFinished(event4 -> {
 
-                            FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(2), rootPane);
+                            FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(1.5), rootPane);
                             fadeTransition1.setFromValue(1);
-                            fadeTransition1.setToValue(0.1);
+                            fadeTransition1.setToValue(0.2);
                             fadeTransition1.play();
 
                             fadeTransition1.setOnFinished(event5 -> {
                                 //main.closeStage();
                                 System.out.println("------- splash screen is closed --------");
-                                loadWindow(getStage(rootPane), fxWeaver.loadView(LoginController.class));
+                                AssistantUtil.loadWindow(AssistantUtil.getStage(rootPane), fxWeaver.loadView(LoginController.class));
                             });
 
                         }

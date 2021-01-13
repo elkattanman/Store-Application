@@ -1,4 +1,4 @@
-package com.elkattanman.javafxapp.controller.bars;
+package com.elkattanman.javafxapp.controllers.bars;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +17,6 @@ public class ToolbarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     @FXML

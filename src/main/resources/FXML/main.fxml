@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="custom-pane" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controller.MainController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="custom-pane" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.MainController">
    <children>
       <JFXDrawer fx:id="drawer" defaultDrawerSize="150.0" resizableOnDrag="true" resizeContent="true" styleClass="jfx-drawer" />
       <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <fx:include source="bars/titleBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            <fx:include source="bars/titleBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
                <children>
                   <JFXTabPane fx:id="mainTabPane" layoutY="24.0" prefHeight="576.0" prefWidth="1006.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
@@ -21,69 +29,6 @@
                         <Tab closable="false" styleClass="tab-main" text="Main Menu">
                            <content>
                               <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                 <center>
-                                    <GridPane BorderPane.alignment="CENTER">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <JFXButton contentDisplay="TOP" onAction="#hrkatHandleAction" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="الحركات" textFill="WHITE">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton contentDisplay="TOP" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="الاساسيات" textFill="WHITE" GridPane.columnIndex="1">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton contentDisplay="TOP" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="الخزنه" textFill="WHITE" GridPane.rowIndex="1">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton contentDisplay="TOP" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="التقسيط" textFill="WHITE" GridPane.rowIndex="2">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton contentDisplay="TOP" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="المخزن" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton contentDisplay="TOP" prefHeight="180.0" prefWidth="600.0" styleClass="dialog-button" text="التقارير" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <graphic>
-                                                <FontAwesomeIconView size="65" />
-                                             </graphic>
-                                             <font>
-                                                <Font size="28.0" />
-                                             </font>
-                                          </JFXButton>
-                                       </children>
-                                    </GridPane>
-                                 </center>
                                  <top>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="القائمه الرئيسيه" BorderPane.alignment="CENTER">
                                        <font>
@@ -94,6 +39,73 @@
                                        </BorderPane.margin>
                                     </Text>
                                  </top>
+                                 <center>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <GridPane AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <JFXButton contentDisplay="TOP" onAction="#goToTransactions" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="المعاملات" textFill="WHITE">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                                <JFXButton contentDisplay="TOP" onAction="#goToBasics" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="الاساسيات" textFill="WHITE" GridPane.columnIndex="1">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                                <JFXButton contentDisplay="TOP" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="الخزنه" textFill="WHITE" GridPane.rowIndex="1">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                                <JFXButton contentDisplay="TOP" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="التقسيط" textFill="WHITE" GridPane.rowIndex="2">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                                <JFXButton contentDisplay="TOP" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="المخزن" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                                <JFXButton contentDisplay="TOP" prefHeight="500.0" prefWidth="1000.0" styleClass="dialog-button" text="التقارير" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <graphic>
+                                                      <FontAwesomeIconView size="65" />
+                                                   </graphic>
+                                                   <font>
+                                                      <Font size="28.0" />
+                                                   </font>
+                                                </JFXButton>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </center>
                               </BorderPane>
                            </content></Tab>
                         <Tab closable="false" styleClass="tab-main" text="Tab2">
@@ -104,7 +116,7 @@
                      </tabs>
                   </JFXTabPane>
                   <JFXHamburger fx:id="hamburger" layoutX="1149.0" layoutY="46.0" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="46.0" />
-                  <fx:include source="bars/menuBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                  <fx:include source="bars/menuBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

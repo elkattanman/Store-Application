@@ -1,6 +1,6 @@
 package com.elkattanman.javafxapp.util;
 
-import com.elkattanman.javafxapp.controller.MainController;
+import com.elkattanman.javafxapp.controllers.MainController;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -49,9 +49,9 @@ public class AssistantUtil {
         if (parentStage != null) {
             stage = parentStage;
         } else {
-            stage = new Stage(StageStyle.UNDECORATED);
+            stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Version 1.0");
         }
-//        stage.setTitle(title);
         stage.setScene(new Scene(view));
         stage.show();
         setStageIcon(stage);

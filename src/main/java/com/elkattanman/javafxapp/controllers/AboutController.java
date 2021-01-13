@@ -1,4 +1,4 @@
-package com.elkattanman.javafxapp.controller;
+package com.elkattanman.javafxapp.controllers;
 
 import java.awt.Desktop;
 import java.io.IOException;

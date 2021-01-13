@@ -1,6 +1,6 @@
 package com.elkattanman.javafxapp.application;
 
-import com.elkattanman.javafxapp.controller.SplashScreen;
+import com.elkattanman.javafxapp.controllers.MainController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -26,7 +26,11 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.stage;
+        /*
+        TODO uncomment it when u ready to use
         Scene scene = new Scene(fxWeaver.loadView(SplashScreen.class), 1200, 700);
+         */
+        Scene scene = new Scene(fxWeaver.loadView(MainController.class), 1200, 700);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();

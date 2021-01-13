@@ -1,12 +1,15 @@
-package com.elkattanman.javafxapp.controller.bars;
+package com.elkattanman.javafxapp.controllers.bars;
 
-import javafx.event.ActionEvent;
+import com.elkattanman.javafxapp.controllers.MainController;
+import com.elkattanman.javafxapp.util.AssistantUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -15,6 +18,9 @@ import java.util.ResourceBundle;
 @Component
 @FxmlView("/FXML/bars/titleBar.fxml")
 public class TitleBarController implements Initializable {
+
+    @Autowired private FxWeaver fxWeaver;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -41,5 +47,9 @@ public class TitleBarController implements Initializable {
     public void fullScreen(MouseEvent mouseEvent) {
         final Stage stage = getStage(mouseEvent);
         stage.setFullScreen(!stage.isFullScreen());
+    }
+
+    public void getHome(MouseEvent mouseEvent) {
+        AssistantUtil.loadWindow(getStage(mouseEvent), fxWeaver.loadView(MainController.class));
     }
 }

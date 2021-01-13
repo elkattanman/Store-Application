@@ -2,11 +2,11 @@
 
 <?import javafx.scene.control.*?>
 
-<MenuBar layoutY="-1.0" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controller.bars.MenuBarController">
+<MenuBar layoutY="-1.0" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.bars.MenuBarController">
     <menus>
         <Menu mnemonicParsing="false" text="File">
             <items>
-                <MenuItem mnemonicParsing="false" text="Settings" />
+                <MenuItem mnemonicParsing="false" onAction="#goSettings" text="Settings" />
                 <MenuItem mnemonicParsing="false" text="Exit" />
             </items>
         </Menu>

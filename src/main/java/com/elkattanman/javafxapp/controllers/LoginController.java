@@ -1,29 +1,31 @@
-package com.elkattanman.javafxapp.controller;
+package com.elkattanman.javafxapp.controllers;
 
 import com.elkattanman.javafxapp.util.AlertMaker;
+import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import static com.elkattanman.javafxapp.util.AssistantUtil.getStage;
-import static com.elkattanman.javafxapp.util.AssistantUtil.loadWindow;
 
 @Component
 @FxmlView("/FXML/Login.fxml")
 public class LoginController implements Initializable {
 
-    private final FxWeaver fxWeaver;
+    @Autowired private FxWeaver fxWeaver;
 
     @FXML private AnchorPane rootPane;
 
@@ -32,8 +34,13 @@ public class LoginController implements Initializable {
     @FXML
     private JFXPasswordField txtPass;
 
-    public LoginController(FxWeaver fxWeaver) {
-        this.fxWeaver=fxWeaver;
+    public LoginController() {}
+
+    private void Animation() {
+        FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(1.5), rootPane);
+        fadeTransition1.setFromValue(0);
+        fadeTransition1.setToValue(1);
+        fadeTransition1.play();
     }
 
     @FXML
@@ -42,7 +49,7 @@ public class LoginController implements Initializable {
     }
     void doLogin(){
         if (txtFld.getText().equals("admin") && txtPass.getText().equals("123456")) {
-            loadWindow(getStage(rootPane), fxWeaver.loadView(MainController.class));
+            AssistantUtil.loadWindow(AssistantUtil.getStage(rootPane), fxWeaver.loadView(MainController.class));
         } else {
             AlertMaker.showSimpleAlert("Email or password not valid", "اسم المستخدم او كلمة المرور خطأ");
         }
@@ -62,7 +69,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        Animation();
     }
 
 
