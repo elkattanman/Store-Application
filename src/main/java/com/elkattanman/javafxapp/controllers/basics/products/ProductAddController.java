@@ -1,6 +1,8 @@
 package com.elkattanman.javafxapp.controllers.basics.products;
 
 
+import com.elkattanman.javafxapp.domain.Product;
+import com.elkattanman.javafxapp.repositories.ProductRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -12,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -23,7 +26,8 @@ import java.util.ResourceBundle;
 public class ProductAddController implements Initializable {
 
     @FXML
-    private JFXTextField title, id, author, publisher;
+    private JFXTextField nameTF, typeTF, priceTF;
+
     @FXML
     private JFXButton saveButton, cancelButton;
     @FXML
@@ -31,7 +35,13 @@ public class ProductAddController implements Initializable {
     @FXML
     private AnchorPane mainContainer;
 
+    private final ProductRepository productRepository;
+
     private Boolean isInEditMode = Boolean.FALSE;
+
+    public ProductAddController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
 
     @Override
@@ -39,14 +49,21 @@ public class ProductAddController implements Initializable {
 
     }
 
-    @FXML
-    private void addBook(ActionEvent event) {
-        String bookID = StringUtils.trimToEmpty(id.getText());
-        String bookAuthor = StringUtils.trimToEmpty(author.getText());
-        String bookName = StringUtils.trimToEmpty(title.getText());
-        String bookPublisher = StringUtils.trimToEmpty(publisher.getText());
+//        return Product.builder().name(name).type(type).price(price).build();
 
-        if (bookID.isEmpty() || bookAuthor.isEmpty() || bookName.isEmpty()) {
+    @FXML
+    private void addProduct(ActionEvent event) {
+        String name=StringUtils.trimToEmpty(nameTF.getText());
+        String type=StringUtils.trimToEmpty(typeTF.getText());
+        String priceString=StringUtils.trimToEmpty(priceTF.getText());
+        double price=0;
+        try {
+            price=Double.parseDouble(priceString.isEmpty()?"0":priceString);
+        }catch (Exception ex){
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "من فضلك ادخل رقم  فى السعر");
+            return;
+        }
+        if (name.isEmpty() || type.isEmpty() || priceString.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
             return;
         }
@@ -55,6 +72,8 @@ public class ProductAddController implements Initializable {
             handleEditOperation();
             return;
         }
+        Product product=Product.builder().name(name).type(type).price(price).build();
+        Product savedProduct = productRepository.save(product);
 
 //        if (DataHelper.isBookExists(bookID)) {
 //            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
@@ -100,10 +119,9 @@ public class ProductAddController implements Initializable {
 //    }
 
     private void clearEntries() {
-        title.clear();
-        id.clear();
-        author.clear();
-        publisher.clear();
+        nameTF.clear();
+        typeTF.clear();
+        priceTF.clear();
     }
 
     private void handleEditOperation() {

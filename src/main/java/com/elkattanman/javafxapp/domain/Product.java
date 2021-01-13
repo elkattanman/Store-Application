@@ -18,7 +18,7 @@ public class Product {
     private Integer id;
     private String name;
     private String type;
-    private Double Price;
+    private Double price;
 
 //    @ManyToOne
 //    private Store store;

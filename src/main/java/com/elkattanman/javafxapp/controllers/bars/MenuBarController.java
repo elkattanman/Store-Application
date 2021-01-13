@@ -1,5 +1,6 @@
 package com.elkattanman.javafxapp.controllers.bars;
 
+import com.elkattanman.javafxapp.controllers.AboutController;
 import com.elkattanman.javafxapp.controllers.settings.SettingsController;
 import com.elkattanman.javafxapp.util.AssistantUtil;
 import javafx.event.ActionEvent;
@@ -29,5 +30,9 @@ public class MenuBarController implements Initializable {
 
     public void goSettings(ActionEvent actionEvent) {
         AssistantUtil.loadWindow(null,fxWeaver.loadView(SettingsController.class));
+    }
+
+    public void goHelp(ActionEvent actionEvent) {
+        AssistantUtil.loadWindow(null,fxWeaver.loadView(AboutController.class));
     }
 }
