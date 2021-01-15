@@ -5,18 +5,17 @@ import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
 import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.scene.Parent;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 @FxmlView("/FXML/basics/products/products.fxml")
@@ -35,7 +33,6 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
 
     @FXML
     private TableView<Product> table;
-
     @FXML
     private TableColumn<Product, Integer> idCol;
     @FXML
@@ -61,6 +58,7 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
         initCol();
         list.setAll(productRepository.findAll());
         table.setItems(list);
+        MakeMyFilter() ;
     }
 
     @FXML
@@ -68,6 +66,7 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
         FxControllerAndView<ProductAddController, Parent> load = fxWeaver.load(ProductAddController.class);
         ProductAddController controller = load.getController();
         controller.setCallBack(this);
+        controller.resetEditToAdd();
         controller.inflateUI(new Product());
         AssistantUtil.loadWindow(null, load.getView().get());
     }
@@ -77,6 +76,7 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
         FxControllerAndView<ProductAddController, Parent> load = fxWeaver.load(ProductAddController.class);
         ProductAddController controller = load.getController();
         controller.setCallBack(this);
+        controller.resetAddToEdit();
         controller.inflateUI(selectedItem);
         AssistantUtil.loadWindow(null, load.getView().get());
     }
@@ -97,14 +97,32 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
+    }
+
+    private void MakeMyFilter(){
         FilteredList<Product> filteredData = new FilteredList<>(list, p -> true);
 
         searchTF.textProperty().addListener( (observable, oldValue, newValue) -> {
-//            filteredData.setPredicate((TreeItem<Product> t) -> t.getValue().getName().contains(newValue) );
-//            table.s
-        });
-    }
+            filteredData.setPredicate(product->{
 
+                if(newValue == null || newValue.isEmpty() ){
+                    return true ;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase() ;
+                if(product.getName().toLowerCase().indexOf(lowerCaseFilter) != -1 ){
+                    return true ;
+                }
+                return false ;
+            });
+
+        });
+
+        SortedList<Product> sortedProducts = new SortedList<>(filteredData) ;
+        sortedProducts.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedProducts);
+
+    }
 
     @Override
     public Boolean callBack(Product object) {

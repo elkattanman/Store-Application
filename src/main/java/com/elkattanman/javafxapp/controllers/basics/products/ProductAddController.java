@@ -15,7 +15,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -92,6 +91,8 @@ public class ProductAddController implements Initializable {
 
         Product savedProduct = productRepository.save(myProduct);
         callBack.callBack(savedProduct);
+        myProduct = new Product() ;
+
 //        if (DataHelper.isBookExists(bookID)) {
 //            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
 //            return;
@@ -125,13 +126,17 @@ public class ProductAddController implements Initializable {
 //            Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-
+    public void resetEditToAdd(){
+        isInEditMode = Boolean.FALSE;
+    }
+    public void resetAddToEdit(){
+        isInEditMode = Boolean.TRUE;
+    }
     public void inflateUI(Product product) {
         myProduct=product;
         nameTF.setText(product.getName());
         typeTF.setText(product.getType());
         priceTF.setText(""+product.getPrice());
-        isInEditMode = Boolean.TRUE;
     }
 
     private void clearEntries() {
