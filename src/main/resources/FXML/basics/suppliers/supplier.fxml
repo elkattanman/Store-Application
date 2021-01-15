@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.lang.String?>
 <BorderPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.basics.suppliers.SuppliersController">
 
         <top>
@@ -49,6 +50,10 @@
                                     <MenuItem mnemonicParsing="false" onAction="#edit" text="Edit" />
                                     <MenuItem mnemonicParsing="false" onAction="#remove" text="Remove" />
                                 </items>
+                                <styleClass>
+                                    <String fx:value="table-context" />
+                                    <String fx:value="colored-context-menu" />
+                                </styleClass>
                             </ContextMenu>
                         </contextMenu>
                     </TableView>

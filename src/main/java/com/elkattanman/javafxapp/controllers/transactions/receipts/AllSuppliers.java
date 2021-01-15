@@ -1,9 +1,8 @@
-package com.elkattanman.javafxapp.controllers.basics.suppliers;
+package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
-import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Supplier;
+import com.elkattanman.javafxapp.repositories.ReceiptRepository;
 import com.elkattanman.javafxapp.repositories.SupplierRepository;
-import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,11 +11,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import net.rgielen.fxweaver.core.FxControllerAndView;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-@FxmlView("/FXML/basics/suppliers/supplier.fxml")
-public class SuppliersController implements Initializable , CallBack<Boolean , Supplier> {
+@FxmlView("/FXML/tranactions/receipt/all_suppliers.fxml")
+public class AllSuppliers implements Initializable {
 
     @Autowired
     private FxWeaver fxWeaver;
@@ -37,53 +35,24 @@ public class SuppliersController implements Initializable , CallBack<Boolean , S
     @FXML
     private TableColumn<Supplier, Integer> idCol;
     @FXML
-    private TableColumn<Supplier, String>  nameCol, cityCol , phoneCol , emailCol , companyCol;
+    private TableColumn<Supplier, String>  nameCol , phoneCol , emailCol , companyCol;
     @FXML
     private JFXTextField searchTF;
 
     private ObservableList<Supplier> list = FXCollections.observableArrayList();
     private final SupplierRepository supplierRepository ;
 
-    public SuppliersController(SupplierRepository supplierRepository) {
+    public AllSuppliers(ReceiptRepository receiptRepository, SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-     initCol();
-     list.setAll(supplierRepository.findAll() );
-     table.setItems(list);
-     MakeMyFilter();
-    }
-
-    @FXML
-    public void add(ActionEvent actionEvent) {
-        FxControllerAndView<SupplierAddController, Parent> load = fxWeaver.load(SupplierAddController.class);
-        SupplierAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.inflateUI(new Supplier());
-        controller.resetEditToAdd();
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-    @FXML
-    void edit(ActionEvent event) {
-        Supplier selectedItem = table.getSelectionModel().getSelectedItem();
-        FxControllerAndView<SupplierAddController, Parent> load = fxWeaver.load(SupplierAddController.class);
-        SupplierAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.inflateUI(selectedItem);
-        controller.resetAddToEdit();
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-    @FXML
-    void remove(ActionEvent event){
-        Supplier selectedItem = table.getSelectionModel().getSelectedItem();
-        supplierRepository.delete(selectedItem);
-        list.remove(selectedItem) ;
-}
-    @FXML
-    void refresh(ActionEvent event){
-        list.setAll(supplierRepository.findAll());
+        initCol();
+        list.setAll(supplierRepository.findAll() );
+        table.setItems(list);
+        MakeMyFilter();
     }
 
     private void MakeMyFilter() {
@@ -113,26 +82,25 @@ public class SuppliersController implements Initializable , CallBack<Boolean , S
     private void initCol() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         companyCol.setCellValueFactory(new PropertyValueFactory<>("company"));
 
     }
 
+    public void handleRefresh(ActionEvent actionEvent) {
+        list.setAll(supplierRepository.findAll());
+    }
 
-    @Override
-    public Boolean callBack(Supplier object) {
+    public void SelectAction(ActionEvent actionEvent) {
 
-        for (int i=0 ; i < list.size(); ++i) {
-            Supplier supllier = list.get(i);
-            if (supllier.getId().equals(object.getId())) {
-                list.set(i, object);
-                return true;
-            }
-        }
+    }
 
-        list.add(object) ;
-        return true;
+    private Stage getStage() {
+        return (Stage) table.getScene().getWindow();
+    }
+
+    public void closeStage(ActionEvent actionEvent) {
+        getStage().close();
     }
 }

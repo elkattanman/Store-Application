@@ -1,9 +1,7 @@
-package com.elkattanman.javafxapp.controllers.basics.stores;
+package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
-import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Store;
 import com.elkattanman.javafxapp.repositories.StoreRepository;
-import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,11 +10,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import net.rgielen.fxweaver.core.FxControllerAndView;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +23,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-@FxmlView("/FXML/basics/stores/stores.fxml")
-public class StoresController  implements Initializable , CallBack<Boolean , Store> {
+@FxmlView("/FXML/tranactions/receipt/all_stores.fxml")
+public class AllStores implements Initializable {
+
     @Autowired
     private FxWeaver fxWeaver;
     @FXML
@@ -40,7 +38,13 @@ public class StoresController  implements Initializable , CallBack<Boolean , Sto
     private JFXTextField searchTF;
 
     private ObservableList<Store> list = FXCollections.observableArrayList();
+
     private final StoreRepository storeRepository ;
+
+    public AllStores(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCol();
@@ -48,42 +52,6 @@ public class StoresController  implements Initializable , CallBack<Boolean , Sto
         table.setItems(list);
         MakeMyFilter();
     }
-    public StoresController(StoreRepository storeRepository){
-        this.storeRepository = storeRepository ;
-    }
-
-    @FXML
-    public void add(ActionEvent actionEvent) {
-        FxControllerAndView<StoreAddController, Parent> load = fxWeaver.load(StoreAddController.class);
-        StoreAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.inflateUI(new Store());
-        controller.resetEditToAdd();
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-
-    @FXML
-    void edit(ActionEvent event) {
-        Store selectedItem = table.getSelectionModel().getSelectedItem();
-        FxControllerAndView<StoreAddController, Parent> load = fxWeaver.load(StoreAddController.class);
-        StoreAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.inflateUI(selectedItem);
-        controller.resetAddToEdit();
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-
-    @FXML
-    void remove(ActionEvent event){
-        Store selectedItem = table.getSelectionModel().getSelectedItem();
-        storeRepository.delete(selectedItem);
-        list.remove(selectedItem) ;
-    }
-    @FXML
-    void refresh(ActionEvent event){
-        list.setAll(storeRepository.findAll());
-    }
-
 
     private void MakeMyFilter(){
         FilteredList<Store> filteredData = new FilteredList<>(list, s -> true);
@@ -117,18 +85,19 @@ public class StoresController  implements Initializable , CallBack<Boolean , Sto
         branchCol.setCellValueFactory(new PropertyValueFactory<>("branch"));
     }
 
-    @Override
-    public Boolean callBack(Store object) {
+    public void handleRefresh(ActionEvent actionEvent) {
+        list.setAll(storeRepository.findAll());
+    }
 
-        for (int i=0 ; i < list.size(); ++i) {
-            Store store= list.get(i);
-            if (store.getId().equals(object.getId())) {
-                list.set(i, object);
-                return true;
-            }
-        }
+    private Stage getStage() {
+        return (Stage) table.getScene().getWindow();
+    }
 
-        list.add(object) ;
-        return true;
+    public void closeStage() {
+        getStage().close();
+    }
+
+    public void SelectAction(ActionEvent actionEvent) {
+
     }
 }

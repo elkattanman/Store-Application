@@ -52,6 +52,8 @@ public class LoginController implements Initializable {
             AssistantUtil.loadWindow(AssistantUtil.getStage(rootPane), fxWeaver.loadView(MainController.class));
         } else {
             AlertMaker.showSimpleAlert("Email or password not valid", "اسم المستخدم او كلمة المرور خطأ");
+            txtFld.getStyleClass().add("wrong-credentials");
+            txtPass.getStyleClass().add("wrong-credentials");
         }
     }
 

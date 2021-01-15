@@ -1,7 +1,7 @@
 package com.elkattanman.javafxapp.controllers.basics.suppliers;
 
 
-import com.elkattanman.javafxapp.controllers.basics.CallBack;
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Supplier;
 import com.elkattanman.javafxapp.repositories.SupplierRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
@@ -24,8 +24,9 @@ import java.util.ResourceBundle;
 @FxmlView("/FXML/basics/suppliers/add_supplier.fxml")
 public class SupplierAddController implements Initializable {
 
+
     @FXML
-    private JFXTextField nameTF, addressTF, phoneTF , branchTF;
+    private JFXTextField nameTF, addressTF, phoneTF , emailTF, companyTF;
     private CallBack callBack;
     @FXML
     private StackPane rootPane;
@@ -51,10 +52,10 @@ public class SupplierAddController implements Initializable {
 
     private boolean makeSupplierr(){
         String name = StringUtils.trimToEmpty(nameTF.getText());
-        String email = StringUtils.trimToEmpty(branchTF.getText());
+        String email = StringUtils.trimToEmpty(emailTF.getText());
         String address = StringUtils.trimToEmpty(addressTF.getText());
         String phone = StringUtils.trimToEmpty(phoneTF.getText());
-        String company = " " ;
+        String company = StringUtils.trimToEmpty(companyTF.getText());
           for(int i =0 ; i < phone.length() ; ++ i ){
               if(phone.charAt(i) > '9' ) {
                   AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "ؤقم الهاتف يجب ان يكون ارقام فقط");
@@ -62,7 +63,7 @@ public class SupplierAddController implements Initializable {
               }
           }
 
-        if (name.isEmpty() || address.isEmpty() || email.isEmpty()  || phone.isEmpty() ) {
+        if (name.isEmpty() || address.isEmpty() || email.isEmpty()  || phone.isEmpty() || company.isEmpty() ) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
             return false;
         }
@@ -86,6 +87,8 @@ public class SupplierAddController implements Initializable {
         Supplier savedSupplier = supplierRepository.save(mySupplier);
         callBack.callBack(savedSupplier);
         mySupplier = new Supplier();
+        clearEntries();
+        AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success operation", "تمت عمليه الادخال");
     }
 
     @FXML
@@ -105,19 +108,23 @@ public class SupplierAddController implements Initializable {
         nameTF.setText(supplier.getName());
         addressTF.setText(supplier.getCity());
         phoneTF.setText(supplier.getPhone());
-        branchTF.setText(supplier.getEmail());
+        emailTF.setText(supplier.getEmail());
+        companyTF.setText(supplier.getCompany());
     }
 
     private void clearEntries() {
         nameTF.clear();
         addressTF.clear();
         phoneTF.clear();
-        branchTF.clear();
+        emailTF.clear();
+        companyTF.clear();
     }
 
     private void handleEditOperation() {
         if(!makeSupplierr())return;
         Supplier savedSupplier = supplierRepository.save(mySupplier);
         callBack.callBack(savedSupplier);
+        Stage stage= (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 }

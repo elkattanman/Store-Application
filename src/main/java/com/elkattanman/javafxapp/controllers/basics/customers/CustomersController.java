@@ -1,6 +1,6 @@
 package com.elkattanman.javafxapp.controllers.basics.customers;
 
-import com.elkattanman.javafxapp.controllers.basics.CallBack;
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Customer;
 import com.elkattanman.javafxapp.repositories.CustomerRepository;
 import com.elkattanman.javafxapp.util.AssistantUtil;

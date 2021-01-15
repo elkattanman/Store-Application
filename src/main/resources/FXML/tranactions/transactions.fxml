@@ -20,7 +20,7 @@
                             <tabs>
                                 <Tab closable="false" styleClass="tab-main" text="فاتوره الشراء">
                                     <content>
-                                        <fx:include source="receipt.fxml" />
+                                        <fx:include source="receipt/receipt.fxml" />
                                     </content></Tab>
                                 <Tab closable="false" styleClass="tab-main" text="فاتوره البيع">
                                     <content>

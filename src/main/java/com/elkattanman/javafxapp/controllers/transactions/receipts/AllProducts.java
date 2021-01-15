@@ -1,8 +1,9 @@
-package com.elkattanman.javafxapp.controllers.basics.products;
+package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
 import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
+import com.elkattanman.javafxapp.repositories.ReceiptRepository;
 import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -12,11 +13,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import net.rgielen.fxweaver.core.FxControllerAndView;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-@FxmlView("/FXML/basics/products/products.fxml")
-public class ProductsController implements Initializable, CallBack<Boolean, Product> {
+@FxmlView("/FXML/tranactions/receipt/all_products.fxml")
+public class AllProducts implements Initializable {
+
+
     @Autowired
     private FxWeaver fxWeaver;
+
+    private CallBack callBack;
 
     @FXML
     private TableView<Product> table;
@@ -48,10 +52,10 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
     @FXML
     private JFXTextField searchTF;
 
-    public ProductsController(ProductRepository productRepository) {
+
+    public AllProducts(ReceiptRepository receiptRepository, ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,34 +65,8 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
         MakeMyFilter() ;
     }
 
-    @FXML
-    public void add(ActionEvent actionEvent) {
-        FxControllerAndView<ProductAddController, Parent> load = fxWeaver.load(ProductAddController.class);
-        ProductAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.resetEditToAdd();
-        controller.inflateUI(new Product());
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-    @FXML
-    void edit(ActionEvent event) {
-        Product selectedItem = table.getSelectionModel().getSelectedItem();
-        FxControllerAndView<ProductAddController, Parent> load = fxWeaver.load(ProductAddController.class);
-        ProductAddController controller = load.getController();
-        controller.setCallBack(this);
-        controller.resetAddToEdit();
-        controller.inflateUI(selectedItem);
-        AssistantUtil.loadWindow(null, load.getView().get());
-    }
-
-    @FXML
-    void refresh(ActionEvent event) {
-
-    }
-
-    @FXML
-    void remove(ActionEvent event) {
-
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
     }
 
     private void initCol() {
@@ -124,17 +102,20 @@ public class ProductsController implements Initializable, CallBack<Boolean, Prod
 
     }
 
-    @Override
-    public Boolean callBack(Product object) {
-        for (int i=0 ; i < list.size(); ++i) {
-            Product product= list.get(i);
-            if (product.getId().equals(object.getId())) {
-                list.set(i, object);
-                return true;
-            }
-        }
-        list.add(object);
-        return true;
+    public void handleRefresh(ActionEvent actionEvent) {
+        list.setAll(productRepository.findAll());
     }
 
+    public void SelectAction(ActionEvent actionEvent) {
+        Product product=table.getSelectionModel().getSelectedItem();
+        callBack.callBack(product);
+        getStage().close();
+    }
+    private Stage getStage() {
+        return (Stage) table.getScene().getWindow();
+    }
+
+    public void closeStage(ActionEvent actionEvent) {
+        getStage().close();
+    }
 }

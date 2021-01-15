@@ -1,7 +1,7 @@
 package com.elkattanman.javafxapp.controllers.basics.stores;
 
 
-import com.elkattanman.javafxapp.controllers.basics.CallBack;
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Store;
 import com.elkattanman.javafxapp.repositories.StoreRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
@@ -86,6 +86,8 @@ public class StoreAddController implements Initializable {
         Store savedStore = storeRepository.save(myStore);
         callBack.callBack(savedStore);
         myStore = new Store();
+        clearEntries();
+        AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success operation", "تمت عمليه الادخال");
     }
 
     @FXML

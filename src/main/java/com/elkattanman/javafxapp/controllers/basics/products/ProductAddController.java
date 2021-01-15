@@ -1,7 +1,7 @@
 package com.elkattanman.javafxapp.controllers.basics.products;
 
 
-import com.elkattanman.javafxapp.controllers.basics.CallBack;
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
@@ -92,20 +92,8 @@ public class ProductAddController implements Initializable {
         Product savedProduct = productRepository.save(myProduct);
         callBack.callBack(savedProduct);
         myProduct = new Product() ;
-
-//        if (DataHelper.isBookExists(bookID)) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
-//            return;
-//        }
-//
-//        Book book = new Book(bookID, bookName, bookAuthor, bookPublisher, Boolean.TRUE);
-//        boolean result = DataHelper.insertNewBook(book);
-//        if (result) {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New book added", bookName + " has been added");
-//            clearEntries();
-//        } else {
-//            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed to add new book", "Check all the entries and try again");
-//        }
+        clearEntries();
+        AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success operation", "تمت عمليه الادخال");
     }
 
     @FXML
@@ -114,18 +102,6 @@ public class ProductAddController implements Initializable {
         stage.close();
     }
 
-    private void checkData() {
-        String qu = "SELECT title FROM BOOK";
-//        ResultSet rs = databaseHandler.execQuery(qu);
-//        try {
-//            while (rs.next()) {
-//                String titlex = rs.getString("title");
-//                System.out.println(titlex);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
     public void resetEditToAdd(){
         isInEditMode = Boolean.FALSE;
     }
@@ -149,5 +125,7 @@ public class ProductAddController implements Initializable {
         if(!makeProduct())return;
         Product savedProduct = productRepository.save(myProduct);
         callBack.callBack(savedProduct);
+        Stage stage= (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 }

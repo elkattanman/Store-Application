@@ -25,7 +25,9 @@ public class ReceiptItem{
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     Product product;
-
-
     private int quantity;
+
+    public double anTotal(){
+        return quantity*product.getPrice();
+    }
 }

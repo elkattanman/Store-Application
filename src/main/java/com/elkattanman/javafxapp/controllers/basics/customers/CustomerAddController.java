@@ -1,7 +1,7 @@
 package com.elkattanman.javafxapp.controllers.basics.customers;
 
 
-import com.elkattanman.javafxapp.controllers.basics.CallBack;
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Customer;
 import com.elkattanman.javafxapp.repositories.CustomerRepository;
 import com.elkattanman.javafxapp.util.AlertMaker;
@@ -86,6 +86,8 @@ public class CustomerAddController implements Initializable {
         Customer savedCustomer = customerRepository.save(myCustomer);
         callBack.callBack(savedCustomer);
         myCustomer = new Customer();
+        clearEntries();
+        AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Success operation", "تمت عمليه الادخال");
     }
 
     @FXML
@@ -119,5 +121,7 @@ public class CustomerAddController implements Initializable {
         if(!makeCustomer())return;
         Customer savedCustomer = customerRepository.save(myCustomer);
         callBack.callBack(savedCustomer);
+        Stage stage= (Stage) rootPane.getScene().getWindow();
+        stage.close();
     }
 }
