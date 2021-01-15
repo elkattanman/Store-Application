@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="rootPane" prefHeight="350.0" prefWidth="464.0" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.basics.suppliers.SupplierAddController">
+   <children>
+      <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="350.0" prefWidth="464.0" styleClass="custom-pane" stylesheets="@/CSS/dark-theme.css">
+         <children>
+            <VBox prefHeight="350.0" prefWidth="464.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <JFXTextField fx:id="nameTF" alignment="CENTER_RIGHT" labelFloat="true" promptText="اسم العميل">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                        .
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="addressTF" alignment="CENTER_RIGHT" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="عنوان العميل">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="phoneTF" alignment="CENTER_RIGHT" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="رقم التليفون">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="branchTF" alignment="CENTER_RIGHT" labelFloat="true" layoutX="35.0" layoutY="155.0" promptText="الاميل">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0">
+                     <children>
+                        <JFXButton fx:id="saveButton" onAction="#addSupplier" prefHeight="66.0" prefWidth="100.0" text="Save" />
+                        <JFXButton fx:id="cancelButton" layoutX="10.0" layoutY="10.0" onAction="#cancel" prefHeight="66.0" prefWidth="100.0" text="Cancel" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

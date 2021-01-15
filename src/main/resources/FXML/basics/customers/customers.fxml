@@ -4,20 +4,14 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<BorderPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.basics.StoresController">
+<BorderPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.basics.customers.CustomersController">
 
         <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="المخازن" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="العملاء" BorderPane.alignment="CENTER">
                 <font>
                     <Font name="Arial" size="12.0" />
                 </font>
@@ -36,13 +30,13 @@
         <center>
             <AnchorPane minWidth="1200.0" BorderPane.alignment="CENTER">
                 <children>
-                    <TableView layoutX="40.0" layoutY="248.0" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+                    <TableView fx:id="table" layoutX="40.0" layoutY="248.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
                         <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                            <TableColumn prefWidth="75.0" text="C3" />
-                            <TableColumn prefWidth="75.0" text="C4" />
-                            <TableColumn prefWidth="75.0" text="C5" />
+                            <TableColumn fx:id="idCol" prefWidth="75.0" text="الكود" />
+                            <TableColumn fx:id="nameCol" prefWidth="75.0" text="الاسم" />
+                            <TableColumn fx:id="cityCol" prefWidth="75.0" text="العنوان" />
+                            <TableColumn fx:id="phoneCol" prefWidth="75.0" text="رقم التلفون" />
+                            <TableColumn fx:id="emailCol" prefWidth="75.0" text="الاميل" />
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -50,9 +44,9 @@
                         <contextMenu>
                             <ContextMenu>
                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Refresh" />
-                                    <MenuItem mnemonicParsing="false" text="Edit" />
-                                    <MenuItem mnemonicParsing="false" text="Remove" />
+                                    <MenuItem mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                                    <MenuItem mnemonicParsing="false" onAction="#edit" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" onAction="#remove" text="Remove" />
                                 </items>
                             </ContextMenu>
                         </contextMenu>
@@ -63,7 +57,7 @@
                   <JFXTextField fx:id="searchTF" alignment="CENTER_RIGHT" labelFloat="true" promptText="بحث" />
                </children>
             </HBox>
-            <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="43.0" text="اضافه" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="45.0">
+            <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="43.0" onAction="#add" text="اضافه" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="45.0">
                <graphic>
                   <FontAwesomeIconView glyphName="PLUS" size="25" />
                </graphic>

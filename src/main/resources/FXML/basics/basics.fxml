@@ -4,10 +4,7 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-
+<?import javafx.scene.layout.*?>
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="custom-pane" stylesheets="@/CSS/dark-theme.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.basics.BasicsController">
     <children>
         <JFXDrawer fx:id="drawer" defaultDrawerSize="150.0" resizableOnDrag="true" resizeContent="true" styleClass="jfx-drawer" />
@@ -24,17 +21,17 @@
                                     </content></Tab>
                                 <Tab closable="false" styleClass="tab-main" text="المخازن">
                                     <content>
-                                        <fx:include source="stores.fxml" />
+                                        <fx:include source="stores/stores.fxml" />
                                     </content>
                                 </Tab>
                                 <Tab closable="false" styleClass="tab-main" text="العملاء">
                                     <content>
-                                        <fx:include source="customers.fxml" />
+                                        <fx:include source="customers/customers.fxml" />
                                     </content>
                                 </Tab>
                                 <Tab closable="false" styleClass="tab-main" text="الموردين">
                                     <content>
-                                        <fx:include source="supplier.fxml" />
+                                        <fx:include source="suppliers/supplier.fxml" />
                                     </content>
                                 </Tab>
                             </tabs>
