@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.transactions.receipts.ReceiptController">
+<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elkattanman.javafxapp.controllers.transactions.receipts.ReceiptController">
         <top>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="فاتوره شراء" BorderPane.alignment="CENTER">
                 <font>
@@ -78,8 +78,8 @@
                             <JFXTextField fx:id="supplierPhoneTF" alignment="CENTER_RIGHT" editable="false" promptText="رقم التليفون" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="التاريخ" GridPane.columnIndex="1" />
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="الوقت" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <JFXDatePicker />
-                            <JFXTimePicker GridPane.rowIndex="1" />
+                            <JFXDatePicker fx:id="dateTF" />
+                            <JFXTimePicker fx:id="timeTF" GridPane.rowIndex="1" />
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="كود المخزن" GridPane.columnIndex="8" GridPane.rowIndex="2" />
                             <HBox alignment="CENTER" GridPane.columnIndex="7" GridPane.rowIndex="2">
                                 <children>
@@ -128,7 +128,7 @@
                      </graphic></JFXButton>
                         </children>
                     </HBox>
-                    <TableView layoutX="40.0" layoutY="248.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
+                    <TableView layoutX="40.0" layoutY="248.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
                         <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -154,6 +154,23 @@
                             </ContextMenu>
                         </contextMenu>
                     </TableView>
+            <HBox alignment="CENTER" layoutX="325.0" layoutY="558.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="1200.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <children>
+                  <JFXTextField editable="false" labelFloat="true" prefHeight="37.0" prefWidth="135.0" promptText="الاجمالى" />
+                  <JFXTextField labelFloat="true" prefHeight="37.0" prefWidth="135.0" promptText="دفع" />
+                  <JFXTextField editable="false" labelFloat="true" prefHeight="37.0" prefWidth="135.0" promptText="باقى" />
+                  <JFXButton prefHeight="39.0" prefWidth="164.0" text="حفظ الفاتورة">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SAVE" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton prefHeight="39.0" prefWidth="164.0" text="طباعة الفاتورة">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PRINT" size="20" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </HBox>
                 </children>
             </AnchorPane>
         </center>

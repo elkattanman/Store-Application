@@ -1,5 +1,7 @@
 package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
+import com.elkattanman.javafxapp.controllers.CallBack;
+import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.domain.Store;
 import com.elkattanman.javafxapp.repositories.StoreRepository;
 import com.jfoenix.controls.JFXTextField;
@@ -41,6 +43,8 @@ public class AllStores implements Initializable {
 
     private final StoreRepository storeRepository ;
 
+    private CallBack callBack;
+
     public AllStores(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }
@@ -51,6 +55,10 @@ public class AllStores implements Initializable {
         list.setAll(storeRepository.findAll());
         table.setItems(list);
         MakeMyFilter();
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
     }
 
     private void MakeMyFilter(){
@@ -98,6 +106,8 @@ public class AllStores implements Initializable {
     }
 
     public void SelectAction(ActionEvent actionEvent) {
-
+        Store store=table.getSelectionModel().getSelectedItem();
+        callBack.callBack(store);
+        getStage().close();
     }
 }

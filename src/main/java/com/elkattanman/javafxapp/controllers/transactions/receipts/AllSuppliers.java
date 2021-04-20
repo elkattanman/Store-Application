@@ -1,5 +1,6 @@
 package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
+import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Supplier;
 import com.elkattanman.javafxapp.repositories.ReceiptRepository;
 import com.elkattanman.javafxapp.repositories.SupplierRepository;
@@ -39,6 +40,8 @@ public class AllSuppliers implements Initializable {
     @FXML
     private JFXTextField searchTF;
 
+    private CallBack callBack;
+
     private ObservableList<Supplier> list = FXCollections.observableArrayList();
     private final SupplierRepository supplierRepository ;
 
@@ -53,6 +56,9 @@ public class AllSuppliers implements Initializable {
         list.setAll(supplierRepository.findAll() );
         table.setItems(list);
         MakeMyFilter();
+    }
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
     }
 
     private void MakeMyFilter() {
@@ -92,8 +98,10 @@ public class AllSuppliers implements Initializable {
         list.setAll(supplierRepository.findAll());
     }
 
-    public void SelectAction(ActionEvent actionEvent) {
-
+    public void SelectAction() {
+        Supplier supplier = table.getSelectionModel().getSelectedItem();
+        callBack.callBack(supplier);
+        getStage().close();
     }
 
     private Stage getStage() {
