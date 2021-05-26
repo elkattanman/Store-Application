@@ -38,7 +38,6 @@ public class TransactionsController implements Initializable {
         makeDraggable(rootPane);
         initDrawer(drawer, hamburger, fxWeaver.loadView(ToolbarController.class));
         initComponents();
-
     }
     private void initComponents() {
         mainTabPane.tabMinWidthProperty().bind(rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(15));

@@ -28,4 +28,12 @@ public class StoreHasProduct {
     @MapsId("productId")
     private Product product;
 
+    public void addQuantity(int val){
+        quantity+=val;
+    }
+
+    public void subQuantity(int val) throws Exception {
+        if(val > quantity) throw new Exception("Value greater than current quantity in store");
+        else quantity-=val;
+    }
 }

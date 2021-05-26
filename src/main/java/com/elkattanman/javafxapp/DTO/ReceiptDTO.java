@@ -1,4 +1,4 @@
-package com.elkattanman.javafxapp.controllers.transactions.receipts;
+package com.elkattanman.javafxapp.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

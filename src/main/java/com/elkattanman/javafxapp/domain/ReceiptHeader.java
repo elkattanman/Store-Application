@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Data
@@ -31,9 +32,16 @@ public class ReceiptHeader {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    private LocalDate time;
+    private LocalDate date;
 
-    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "receiptHeader")
+    private LocalTime time;
+
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "receiptHeader", fetch = FetchType.EAGER)
     private Set<ReceiptItem> receiptItems;
 
+    private double totalPrice;
+
+    private double paid;
+
+    private double remain;
 }

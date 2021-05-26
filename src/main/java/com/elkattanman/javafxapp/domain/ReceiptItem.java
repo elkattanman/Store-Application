@@ -1,14 +1,13 @@
 package com.elkattanman.javafxapp.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+//@Data
+@Setter
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor

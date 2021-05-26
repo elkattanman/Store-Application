@@ -1,9 +1,9 @@
 package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
+import com.elkattanman.javafxapp.DTO.ReceiptDTO;
 import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.*;
 import com.elkattanman.javafxapp.repositories.ReceiptRepository;
-import com.elkattanman.javafxapp.util.AlertMaker;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -18,12 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -58,6 +58,8 @@ public class AllReceipts implements Initializable {
     @FXML
     private TableColumn<ReceiptDTO, Double> totalCol;
 
+    private CallBack callBack;
+
     private ObservableList<ReceiptDTO> list = FXCollections.observableArrayList();
 
     private final ReceiptRepository receiptRepository;
@@ -76,17 +78,21 @@ public class AllReceipts implements Initializable {
         MakeMyFilter();
     }
 
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
+
     private ReceiptDTO toDTO(ReceiptHeader receiptHeader){
-        double total=0;
-        for (ReceiptItem receiptItem : receiptHeader.getReceiptItems()) {
-            total+=receiptItem.anTotal();
-        }
+//        double total=0;
+//        for (ReceiptItem receiptItem : receiptHeader.getReceiptItems()) {
+//            total+=receiptItem.anTotal();
+//        }
         return ReceiptDTO.builder()
                 .id(receiptHeader.getId())
-                .date(receiptHeader.getTime())
+                .date(receiptHeader.getDate())
                 .storeName(receiptHeader.getStore().getName())
                 .supplierName(receiptHeader.getSupplier().getName())
-                .Total(total)
+                .Total(receiptHeader.getTotalPrice())
                 .build();
     }
 
@@ -123,13 +129,18 @@ public class AllReceipts implements Initializable {
     }
 
     @FXML
-    void SelectAction(ActionEvent event) {
-
+    void SelectAction() {
+        ReceiptDTO selectedItem = table.getSelectionModel().getSelectedItem();
+        callBack.callBack(receiptRepository.findById(selectedItem.getId()).get());
+        getStage().close();
     }
 
-    @FXML
-    void closeStage(ActionEvent event) {
+    private Stage getStage() {
+        return (Stage) table.getScene().getWindow();
+    }
 
+    public void closeStage(ActionEvent actionEvent) {
+        getStage().close();
     }
 
     @FXML
