@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -76,6 +77,19 @@ public class AllReceipts implements Initializable {
         list.setAll(receiptDTOS);
         table.setItems(list);
         MakeMyFilter();
+        rowDoubleClick();
+    }
+
+    private void rowDoubleClick() {
+        table.setRowFactory(tableView -> {
+            TableRow<ReceiptDTO> row =new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount()==2 && !row.isEmpty()){
+                    SelectAction();
+                }
+            });
+            return row;
+        });
     }
 
     public void setCallBack(CallBack callBack) {

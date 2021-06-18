@@ -14,5 +14,5 @@ public interface StoreProductRepository extends JpaRepository<StoreHasProduct, S
     List<StoreHasProduct> findAllByProduct_Id(Integer id);
     List<StoreHasProduct> findAllByStore(Product product);
     List<StoreHasProduct> findAllByStore_Id(Integer id);
-    StoreHasProduct findByProductAndStore(Product product, Store store);
+    StoreHasProduct findByProduct_IdAndStore_Id(Integer product, Integer store);
 }

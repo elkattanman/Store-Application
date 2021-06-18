@@ -4,7 +4,6 @@ import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
 import com.elkattanman.javafxapp.repositories.ReceiptRepository;
-import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -63,6 +63,19 @@ public class AllProducts implements Initializable {
         list.setAll(productRepository.findAll());
         table.setItems(list);
         MakeMyFilter() ;
+        rowDoubleClick();
+    }
+
+    private void rowDoubleClick() {
+        table.setRowFactory(tableView -> {
+            TableRow<Product> row =new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount()==2 && !row.isEmpty()){
+                    SelectAction();
+                }
+            });
+            return row;
+        });
     }
 
     public void setCallBack(CallBack callBack) {
@@ -106,7 +119,7 @@ public class AllProducts implements Initializable {
         list.setAll(productRepository.findAll());
     }
 
-    public void SelectAction(ActionEvent actionEvent) {
+    public void SelectAction() {
         Product product=table.getSelectionModel().getSelectedItem();
         callBack.callBack(product);
         getStage().close();

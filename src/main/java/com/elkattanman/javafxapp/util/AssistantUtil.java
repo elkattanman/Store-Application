@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.experimental.UtilityClass;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 @UtilityClass
 public class AssistantUtil {
 
-    public final String ICON_IMAGE_LOC = "/img/icon.ico";
+    public final String ICON_IMAGE_LOC = "img/icon.ico";
     private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -44,6 +45,16 @@ public class AssistantUtil {
         return st;
     }
 
+    public<V extends Parent> void loadInternalWindow(Stage parentStage, V view, Modality modality) {
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(parentStage);
+        stage.initModality(modality);
+        stage.setTitle("Version 1.0");
+        stage.setScene(new Scene(view));
+        stage.show();
+        setStageIcon(stage);
+    }
+    
     public<V extends Parent> void loadWindow(Stage parentStage, V view) {
         Stage stage = null;
         if (parentStage != null) {

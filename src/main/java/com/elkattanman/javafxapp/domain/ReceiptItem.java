@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
+//@EntityListeners(ReceiptItemAudit.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +29,15 @@ public class ReceiptItem{
 
     public double anTotal(){
         return quantity*product.getPrice();
+    }
+
+    @Override
+    public String toString() {
+        return "ReceiptItem{" +
+                "id=" + id +
+                ", receiptHeader=" + receiptHeader.getId() +
+                ", product=" + product.getId() +
+                ", quantity=" + quantity +
+                '}';
     }
 }

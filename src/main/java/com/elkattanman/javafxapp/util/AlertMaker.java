@@ -25,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.ResourceUtils;
 
 
 @UtilityClass
@@ -141,7 +142,7 @@ public class AlertMaker {
         try {
             if (SystemTray.isSupported()) {
                 SystemTray tray = SystemTray.getSystemTray();
-                BufferedImage image = ImageIO.read(AlertMaker.class.getResource(AssistantUtil.ICON_IMAGE_LOC));
+                BufferedImage image = new BufferedImage(1,1,1);
                 TrayIcon trayIcon = new TrayIcon(image, "Library Assistant");
                 trayIcon.setImageAutoSize(true);
                 trayIcon.setToolTip("Library Assistant");

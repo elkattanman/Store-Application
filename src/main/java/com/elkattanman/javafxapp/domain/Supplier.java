@@ -25,4 +25,14 @@ public class Supplier {
     private  String phone ;
     private  String company;
     private  String city ;
+    private  double totalDeptIn;
+
+    public void addDept(double val){
+        totalDeptIn+=val;
+    }
+
+    public void subDept(double val) throws Exception {
+        if(val>totalDeptIn) throw new Exception("Value greater than current dept");
+        totalDeptIn-=val;
+    }
 }

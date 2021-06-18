@@ -17,6 +17,7 @@ public class JavaFxAppApplication {
 
     public static void main(String[] args) {
 //        SpringApplication.run(JavaFxAppApplication.class, args);
+        System.setProperty("java.awt.headless", "false");
         Application.launch(SpringbootJavaFxApplication.class, args);
     }
 

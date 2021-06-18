@@ -1,6 +1,7 @@
 package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
 import com.elkattanman.javafxapp.controllers.CallBack;
+import com.elkattanman.javafxapp.domain.Store;
 import com.elkattanman.javafxapp.domain.Supplier;
 import com.elkattanman.javafxapp.repositories.ReceiptRepository;
 import com.elkattanman.javafxapp.repositories.SupplierRepository;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -49,13 +51,25 @@ public class AllSuppliers implements Initializable {
         this.supplierRepository = supplierRepository;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCol();
         list.setAll(supplierRepository.findAll() );
         table.setItems(list);
         MakeMyFilter();
+        rowDoubleClick();
+    }
+
+    private void rowDoubleClick() {
+        table.setRowFactory(tableView -> {
+            TableRow<Supplier> row =new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount()==2 && !row.isEmpty()){
+                    SelectAction();
+                }
+            });
+            return row;
+        });
     }
     public void setCallBack(CallBack callBack) {
         this.callBack = callBack;

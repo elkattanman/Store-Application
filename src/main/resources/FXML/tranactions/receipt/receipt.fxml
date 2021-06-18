@@ -191,7 +191,7 @@
                               <FontAwesomeIconView glyphName="SAVE" size="20" />
                            </graphic>
                         </JFXButton>
-                        <JFXButton prefHeight="39.0" prefWidth="164.0" text="طباعة الفاتورة">
+                        <JFXButton onAction="#print" prefHeight="39.0" prefWidth="164.0" text="طباعة الفاتورة">
                            <graphic>
                               <FontAwesomeIconView glyphName="PRINT" size="20" />
                            </graphic>

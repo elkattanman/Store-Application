@@ -1,5 +1,6 @@
 package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
+import com.elkattanman.javafxapp.DTO.ReceiptDTO;
 import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
 import com.elkattanman.javafxapp.domain.Store;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -55,6 +57,19 @@ public class AllStores implements Initializable {
         list.setAll(storeRepository.findAll());
         table.setItems(list);
         MakeMyFilter();
+        rowDoubleClick();
+    }
+
+    private void rowDoubleClick() {
+        table.setRowFactory(tableView -> {
+            TableRow<Store> row =new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                if(mouseEvent.getClickCount()==2 && !row.isEmpty()){
+                    SelectAction();
+                }
+            });
+            return row;
+        });
     }
 
     public void setCallBack(CallBack callBack) {
@@ -105,7 +120,7 @@ public class AllStores implements Initializable {
         getStage().close();
     }
 
-    public void SelectAction(ActionEvent actionEvent) {
+    public void SelectAction() {
         Store store=table.getSelectionModel().getSelectedItem();
         callBack.callBack(store);
         getStage().close();
