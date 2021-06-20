@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -20,6 +21,7 @@ public class DeptOut {
     @ManyToOne
     private Customer customer;
     private double dept;
+    private LocalDate date;
 
     public void addDept(double val){
         customer.addDept(val);

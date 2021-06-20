@@ -21,10 +21,11 @@
                                 <Tab closable="false" styleClass="tab-main" text="فاتوره الشراء">
                                     <content>
                                         <fx:include source="receipt/receipt.fxml" />
-                                    </content></Tab>
+                                    </content>
+                                </Tab>
                                 <Tab closable="false" styleClass="tab-main" text="فاتوره البيع">
                                     <content>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" />
+                                        <fx:include source="invoice.fxml" />
                                     </content>
                                 </Tab>
                             </tabs>

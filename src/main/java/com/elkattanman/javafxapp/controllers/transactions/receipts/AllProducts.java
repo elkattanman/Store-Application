@@ -2,8 +2,10 @@ package com.elkattanman.javafxapp.controllers.transactions.receipts;
 
 import com.elkattanman.javafxapp.controllers.CallBack;
 import com.elkattanman.javafxapp.domain.Product;
+import com.elkattanman.javafxapp.domain.Store;
+import com.elkattanman.javafxapp.domain.StoreHasProduct;
 import com.elkattanman.javafxapp.repositories.ProductRepository;
-import com.elkattanman.javafxapp.repositories.ReceiptRepository;
+import com.elkattanman.javafxapp.repositories.StoreProductRepository;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +19,18 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @FxmlView("/FXML/tranactions/receipt/all_products.fxml")
 public class AllProducts implements Initializable {
@@ -48,22 +54,37 @@ public class AllProducts implements Initializable {
 
     private final ProductRepository productRepository;
 
+    private final StoreProductRepository storeProductRepository;
+
+    private Store store;
 
     @FXML
     private JFXTextField searchTF;
 
 
-    public AllProducts(ReceiptRepository receiptRepository, ProductRepository productRepository) {
+    public AllProducts(ProductRepository productRepository, StoreProductRepository storeProductRepository) {
         this.productRepository = productRepository;
+        this.storeProductRepository = storeProductRepository;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCol();
-        list.setAll(productRepository.findAll());
+        list.setAll(getProducts());
         table.setItems(list);
         MakeMyFilter() ;
         rowDoubleClick();
+    }
+
+    private List<Product> getProducts(){
+        if(store==null){
+            log.info("[All Products Window] getting all products");
+            return productRepository.findAll();
+        } else{
+            log.info("[All Products Window] getting all products in store id :{}",store.getId());
+            List<StoreHasProduct> allByStore_id = storeProductRepository.findAllByStore_Id(store.getId());
+            return allByStore_id.stream().map(StoreHasProduct::getProduct).collect(Collectors.toList());
+        }
     }
 
     private void rowDoubleClick() {
@@ -78,8 +99,9 @@ public class AllProducts implements Initializable {
         });
     }
 
-    public void setCallBack(CallBack callBack) {
+    public void setCallBack(CallBack callBack, Store store) {
         this.callBack = callBack;
+        this.store=store;
     }
 
     private void initCol() {

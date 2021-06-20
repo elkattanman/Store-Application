@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.elkattanman.javafxapp.controllers.transactions.InvoiceController">
+    <BorderPane fx:id="mainContainer">
+        <top>
+            <VBox alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
+                <BorderPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </BorderPane.margin>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="فاتورة بيع">
+                    <font>
+                        <Font name="Arial" size="12.0"/>
+                    </font>
+                </Text>
+                <HBox alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1230.0" spacing="20.0">
+                    <padding>
+                        <Insets left="20.0"/>
+                    </padding>
+                    <JFXButton onAction="#newInvoice" prefHeight="39.0" prefWidth="139.0" text="فاتورة جديدة">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="20"/>
+                        </graphic>
+                    </JFXButton>
+                    <JFXButton onAction="#deleteRecipt" prefHeight="39.0" prefWidth="139.0"
+                               text="ارتجاع الفاتورة">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="TRASH" size="20"/>
+                        </graphic>
+                    </JFXButton>
+                </HBox>
+            </VBox>
+        </top>
+        <bottom>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15; -fx-fill: -fx-primarytext;"
+                  text="لا يوجد مشاكل                الاصدار v1.0" BorderPane.alignment="CENTER">
+                <font>
+                    <Font name="Arial" size="12.0"/>
+                </font>
+            </Text>
+        </bottom>
+        <center>
+            <AnchorPane minWidth="1200.0" BorderPane.alignment="CENTER">
+                <GridPane hgap="10.0" layoutX="20.0" prefHeight="167.0" prefWidth="1200.0"
+                          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0"
+                                           prefWidth="20.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0"
+                                           prefWidth="20.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0"
+                                           prefWidth="110.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="رقم الفاتوره"
+                          GridPane.columnIndex="8"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="كود العميل"
+                          GridPane.columnIndex="8" GridPane.rowIndex="1"/>
+                    <HBox alignment="CENTER" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                        <FontAwesomeIconView glyphName="SEARCH" onMouseClicked="#popupCustomers" size="20">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                        <JFXTextField fx:id="customerIdTF" alignment="CENTER_RIGHT" editable="false"
+                                      promptText="كود العميل"/>
+                    </HBox>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="اسم العميل"
+                          GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+                    <JFXTextField fx:id="customerNameTF" alignment="CENTER_RIGHT" editable="false"
+                                  promptText="اسم العميل" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="رقم التليفون"
+                          GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                    <JFXTextField fx:id="customerPhoneTF" alignment="CENTER_RIGHT" editable="false"
+                                  promptText="رقم التليفون" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="التاريخ"
+                          GridPane.columnIndex="1"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="الوقت"
+                          GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <JFXDatePicker fx:id="dateTF"/>
+                    <JFXTimePicker fx:id="timeTF" GridPane.rowIndex="1"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="كود المخزن"
+                          GridPane.columnIndex="8" GridPane.rowIndex="2"/>
+                    <HBox alignment="CENTER" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                        <FontAwesomeIconView glyphName="SEARCH" onMouseClicked="#popupStores" size="20">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                        <JFXTextField fx:id="storeIdTF" alignment="CENTER_RIGHT" editable="false"
+                                      promptText="كود المخزن"/>
+                    </HBox>
+                    <HBox alignment="CENTER" GridPane.columnIndex="7">
+                        <FontAwesomeIconView glyphName="SEARCH" onMouseClicked="#popupRecipts" size="20">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                        <JFXTextField fx:id="idTF" alignment="CENTER_RIGHT" editable="false"
+                                      promptText="رقم الفاتوره"/>
+                    </HBox>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          style="-fx-font-size: 15; -fx-fill: -fx-secondary;" text="اسم المخزن"
+                          GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+                    <JFXTextField fx:id="storeNameTF" alignment="CENTER_RIGHT" editable="false"
+                                  promptText="اسم المخزن" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+                </GridPane>
+                <HBox alignment="CENTER" layoutX="1175.0" layoutY="176.0" nodeOrientation="RIGHT_TO_LEFT"
+                      prefHeight="63.0" prefWidth="1180.0" spacing="15.0" AnchorPane.leftAnchor="20.0"
+                      AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="176.0">
+                    <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+                        <FontAwesomeIconView glyphName="SEARCH" onMouseClicked="#popupProducts" size="20">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                        <JFXTextField fx:id="productIdTF" alignment="CENTER_RIGHT" editable="false"
+                                      labelFloat="true" prefHeight="37.0" prefWidth="90.0"
+                                      promptText="كود المنتج"/>
+                    </HBox>
+                    <JFXTextField fx:id="productNameTF" editable="false" labelFloat="true"
+                                  promptText="اسم المنتج"/>
+                    <JFXTextField fx:id="productTypeTF" editable="false" labelFloat="true" prefHeight="37.0"
+                                  prefWidth="136.0" promptText="نوعه"/>
+                    <JFXTextField fx:id="productPriceTF" editable="false" labelFloat="true" prefHeight="37.0"
+                                  prefWidth="125.0" promptText="سعره"/>
+                    <JFXTextField fx:id="qntStoreTF" editable="false" labelFloat="true" layoutX="548.0"
+                                  layoutY="23.0" prefHeight="37.0" prefWidth="134.0"
+                                  promptText="الموجود بالمخزن"/>
+                    <JFXTextField fx:id="productQntTF" labelFloat="true" onKeyPressed="#enterPressed" promptText="الكميه" />
+                    <JFXTextField fx:id="totalTF" editable="false" labelFloat="true" prefHeight="37.0"
+                                  prefWidth="138.0" promptText="اجمالى السعر"/>
+                    <JFXButton onAction="#addProduct" prefHeight="39.0" prefWidth="164.0" text="اضافه المنتج">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="20"/>
+                        </graphic>
+                    </JFXButton>
+                </HBox>
+                <TableView fx:id="table" layoutX="40.0" layoutY="248.0" nodeOrientation="RIGHT_TO_LEFT"
+                           prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0"
+                           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="250.0">
+                    <columns>
+                        <TableColumn fx:id="productIdCol" prefWidth="75.0" text="كود المنتج"/>
+                        <TableColumn fx:id="productNameCol" prefWidth="75.0" text="اسم المنتج"/>
+                        <TableColumn fx:id="productTypeCol" prefWidth="75.0" text="نوع المنتج"/>
+                        <TableColumn fx:id="productPriceCol" prefWidth="75.0" text="سعره"/>
+                        <TableColumn fx:id="productQntCol" prefWidth="75.0" text="الكمية"/>
+                        <TableColumn fx:id="totalCol" prefWidth="75.0" text="اجمالى السعر"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <contextMenu>
+                        <ContextMenu>
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#removeOrder" text="Remove"/>
+                            </items>
+                            <styleClass>
+                                <String fx:value="table-context"/>
+                                <String fx:value="colored-context-menu"/>
+                            </styleClass>
+                        </ContextMenu>
+                    </contextMenu>
+                </TableView>
+                <HBox alignment="CENTER" layoutX="325.0" layoutY="558.0" nodeOrientation="RIGHT_TO_LEFT"
+                      prefHeight="50.0" prefWidth="1200.0" spacing="20.0" AnchorPane.bottomAnchor="10.0"
+                      AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <JFXTextField fx:id="allTotalTF" editable="false" labelFloat="true" prefHeight="37.0"
+                                  prefWidth="135.0" promptText="الاجمالى"/>
+                    <JFXTextField fx:id="paidTF" labelFloat="true" prefHeight="37.0" prefWidth="135.0"
+                                  promptText="دفع"/>
+                    <FontAwesomeIconView glyphName="TAGS" onMousePressed="#payAll" size="20">
+                        <cursor>
+                            <Cursor fx:constant="HAND"/>
+                        </cursor>
+                    </FontAwesomeIconView>
+                    <JFXTextField fx:id="remainTF" editable="false" labelFloat="true" prefHeight="37.0"
+                                  prefWidth="135.0" promptText="باقى"/>
+                    <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="663.0" spacing="20.0">
+                        <JFXButton onAction="#save" prefHeight="39.0" prefWidth="164.0" text="حفظ الفاتورة">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SAVE" size="20"/>
+                            </graphic>
+                        </JFXButton>
+                        <JFXButton onAction="#print" prefHeight="39.0" prefWidth="164.0"
+                                   text="طباعة الفاتورة">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PRINT" size="20"/>
+                            </graphic>
+                        </JFXButton>
+                    </HBox>
+                </HBox>
+            </AnchorPane>
+        </center>
+
+    </BorderPane>
+</StackPane>

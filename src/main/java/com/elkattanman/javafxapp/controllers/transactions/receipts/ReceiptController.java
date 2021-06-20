@@ -11,6 +11,7 @@ import com.elkattanman.javafxapp.services.ReportService;
 import com.elkattanman.javafxapp.util.AlertMaker;
 import com.elkattanman.javafxapp.util.AssistantUtil;
 import com.elkattanman.javafxapp.util.textfilter.AlphaNumericTextFormatter;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
@@ -19,31 +20,39 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.DirectoryChooser;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 @Component
 @Slf4j
 @FxmlView("/FXML/tranactions/receipt/receipt.fxml")
 public class ReceiptController<T> implements Initializable, CallBack<Boolean, T> {
+
 
     @Autowired
     private FxWeaver fxWeaver;
@@ -62,6 +71,11 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
 
     @Autowired
     private ReportService reportService;
+
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private BorderPane mainContainer;
 
     @FXML
     private JFXTextField supplierIdTF, supplierNameTF, supplierPhoneTF, storeIdTF, idTF, storeNameTF,
@@ -117,6 +131,7 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
         productQntCol.setCellValueFactory(new PropertyValueFactory<>("productQnt"));
         totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
+        table.setPlaceholder(new Label("لا يوجد منتجات تم شرائها"));
     }
 
     @Override
@@ -124,6 +139,7 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
         if (object instanceof Product) {
             Product product = (Product) object;
             initProductTF(product);
+            productQntTF.requestFocus();
         } else if (object instanceof Store) {
             Store store = (Store) object;
             initStoreTF(store);
@@ -141,29 +157,29 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
 
     @FXML
     private void popupRecipts(MouseEvent event) {
-        AllReceipts allReceipts = fxWeaver.loadController(AllReceipts.class);
-        allReceipts.setCallBack(this);
-        AssistantUtil.loadInternalWindow(getStage(), fxWeaver.loadView(AllReceipts.class), Modality.WINDOW_MODAL);
+        FxControllerAndView<AllReceipts, Parent> load = fxWeaver.load(AllReceipts.class);
+        load.getController().setCallBack(this);
+        AssistantUtil.loadInternalWindow(getStage(), load.getView().get(), Modality.WINDOW_MODAL);
     }
 
     @FXML
     private void popupStores(MouseEvent event) {
-        AllStores allStores = fxWeaver.loadController(AllStores.class);
-        allStores.setCallBack(this);
-        AssistantUtil.loadInternalWindow(getStage(), fxWeaver.loadView(AllStores.class), Modality.WINDOW_MODAL);
+        FxControllerAndView<AllStores, Parent> load = fxWeaver.load(AllStores.class);
+        load.getController().setCallBack(this);
+        AssistantUtil.loadInternalWindow(getStage(), load.getView().get(), Modality.WINDOW_MODAL);
     }
 
     @FXML
     private void popupSuppliers(MouseEvent event) {
-        AllSuppliers allSuppliers = fxWeaver.loadController(AllSuppliers.class);
-        allSuppliers.setCallBack(this);
-        AssistantUtil.loadInternalWindow(getStage(), fxWeaver.loadView(AllSuppliers.class), Modality.WINDOW_MODAL);
+        FxControllerAndView<AllSuppliers, Parent> load = fxWeaver.load(AllSuppliers.class);
+        load.getController().setCallBack(this);
+        AssistantUtil.loadInternalWindow(getStage(), load.getView().get(), Modality.WINDOW_MODAL);
     }
 
     public void popupProducts(MouseEvent mouseEvent) {
-        AllProducts allProducts = fxWeaver.loadController(AllProducts.class);
-        allProducts.setCallBack(this);
-        AssistantUtil.loadInternalWindow(getStage(), fxWeaver.loadView(AllProducts.class), Modality.WINDOW_MODAL);
+        FxControllerAndView<AllProducts, Parent> load = fxWeaver.load(AllProducts.class);
+        load.getController().setCallBack(this, null);
+        AssistantUtil.loadInternalWindow(getStage(), load.getView().get(), Modality.WINDOW_MODAL);
     }
 
     private Order initOrder() {
@@ -224,34 +240,8 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
     }
 
     @FXML
-    void payAll(MouseEvent event) {
+    void payAll() {
         paidTF.setText("" + (int) Double.parseDouble(allTotalTF.getText()));
-    }
-
-    public void addProduct(ActionEvent actionEvent) {
-        try {
-            Order order1 = initOrder();
-            for (int i = 0; i < list.size(); ++i) {
-                Order order = list.get(i);
-                if (order.getProductId().equals(order1.getProductId())) {
-                    total -= order.getTotal();
-                    order.setProductQnt(order.getProductQnt() + order1.getProductQnt());
-                    order.setTotal(order.getTotal() + order1.getTotal());
-                    total += order.getTotal();
-                    setTotalTF();
-                    paidTF.clear();
-                    list.set(i, order);
-                    return;
-                }
-            }
-            total += order1.getTotal();
-            setTotalTF();
-            paidTF.clear();
-            list.add(order1);
-        } catch (Exception exception) {
-//            AlertMaker.showErrorMessage(exception);
-            AlertMaker.showErrorMessage("خطا", "من فضلك ادخل جميع الحقول");
-        }
     }
 
     @FXML
@@ -299,30 +289,49 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
 
     private void addProductInStore(ReceiptItem receiptItem){
         ReceiptHeader receiptHeader = receiptItem.getReceiptHeader();
-        log.info("Saving item with id:{} in store id:{}",receiptItem.getProduct().getId(),receiptHeader.getStore().getId());
-        StoreHasProduct byProductAndStore = storeProductRepository.findByProduct_IdAndStore_Id(receiptItem.getProduct().getId(), receiptHeader.getStore().getId());
-        if (byProductAndStore == null) {
-            byProductAndStore = StoreHasProduct.builder()
-                    .storeHasProductID(StoreHasProductID.builder().productId(receiptItem.getProduct().getId()).storeId(receiptHeader.getStore().getId()).build())
-                    .product(receiptItem.getProduct())
-                    .store(receiptHeader.getStore())
-                    .quantity(receiptItem.getQuantity())
-                    .build();
-        } else {
-            byProductAndStore.addQuantity(receiptItem.getQuantity());
+        
+    }
+
+    public void enterPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            addProduct();
         }
-        storeProductRepository.save(byProductAndStore);
+    }
+    public void addProduct() {
+        try {
+            Order order1 = initOrder();
+            for (int i = 0; i < list.size(); ++i) {
+                Order order = list.get(i);
+                if (order.getProductId().equals(order1.getProductId())) {
+                    total -= order.getTotal();
+                    order.setProductQnt(order.getProductQnt() + order1.getProductQnt());
+                    order.setTotal(order.getTotal() + order1.getTotal());
+                    total += order.getTotal();
+                    setTotalTF();
+                    paidTF.clear();
+                    list.set(i, order);
+                    return;
+                }
+            }
+            total += order1.getTotal();
+            setTotalTF();
+            paidTF.clear();
+            list.add(order1);
+        } catch (Exception exception) {
+//            AlertMaker.showErrorMessage(exception);
+            AlertMaker.showErrorMessage("خطا", "من فضلك ادخل جميع الحقول");
+        }
     }
 
     @FXML
     void deleteRecipt() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Look, a Confirmation Dialog");
-        alert.setContentText("هل تريد ارتجاع هذه الفاتورة؟");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        JFXButton noButton = new JFXButton("NO");
+        noButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
+            JFXButton button = new JFXButton("That's Okay");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, Arrays.asList(button), "Issue Cancelled", null);
+        });
+        JFXButton yesButton = new JFXButton("YES");
+        yesButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
             if (myReceiptHeader.getId() != null){
                 receiptRepository.delete(myReceiptHeader);
                 Set<ReceiptItem> receiptItems = myReceiptHeader.getReceiptItems();
@@ -339,11 +348,16 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
                 }
                 myReceiptHeader.setId(null);
                 idTF.setText("فاتورة مرتجعه");
-                AlertMaker.showSimpleAlert("مهمه ناجحه", "تم الحذف بنجاح");
+                JFXButton button = new JFXButton("That's Okay");
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, Arrays.asList(button), "تم ارتجاع الفاتورة", " يمكنك الان تعديل عليها");
             }else{
-                AlertMaker.showSimpleAlert("خطا", "يرجى اختيار فاتورة");
+                JFXButton button = new JFXButton("That's Okay");
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, Arrays.asList(button), "يرجى اختيار فاتورة للارتجاع", null);
             }
-        }
+        });
+
+        AlertMaker.showMaterialDialog(rootPane, mainContainer, Arrays.asList(yesButton, noButton), "Confirm Issue",
+                String.format("هل تريد ارتجاع فاتورة برقم %d ?", myReceiptHeader.getId()));
     }
 
     private void removeProductInStore(ReceiptItem receiptItem){
@@ -354,7 +368,8 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
             byProductAndStore.subQuantity(receiptItem.getQuantity());
             storeProductRepository.save(byProductAndStore);
         } catch (Exception exception) {
-            log.error("[Audit Listener Logger] error occurs :{}", exception);
+            log.error("[remove Product Logger] error occurs :{}", exception);
+            AlertMaker.showErrorMessage(exception);
         }
     }
 
@@ -379,11 +394,16 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
 //        if (selectedDirectory == null) {
 //            AlertMaker.showErrorMessage("Export cancelled", "No Valid Directory Found");
 //        } else {
+        if(myReceiptHeader.getId()==null){
+            JFXButton button = new JFXButton("That's Okay");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, Arrays.asList(button), "يرجى اختيار او حفظ فاتورة للطباعة", null);
+            return;
+        }
             try {
                 reportService.exportReport("buyReceipt","receiptHeader", myReceiptHeader, myReceiptHeader.getReceiptItems());
 //                pdfGenaratorUtil.createPdf("index", Map.of("receipt",myReceiptHeader), selectedDirectory);
             } catch (Exception exception) {
-                log.error("[Gernrate PDF] Error occur : {}",exception);
+                log.error("[Generate PDF] Error occur : {}",exception);
                 AlertMaker.showErrorMessage(exception);
             }
 //        }
@@ -435,4 +455,5 @@ public class ReceiptController<T> implements Initializable, CallBack<Boolean, T>
     private Stage getStage() {
         return (Stage) table.getScene().getWindow();
     }
+
 }

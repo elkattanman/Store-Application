@@ -43,7 +43,7 @@ public class ReportService <L extends Collection>{
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
         /*call jasper engine to display report in jasperviewer window*/
-        JasperViewer.viewReport(jasperPrint);
+        JasperViewer.viewReport(jasperPrint, false);
 
 //        if (reportFormat.equalsIgnoreCase("html")) {
 //            JasperExportManager.exportReportToHtmlFile(jasperPrint, File.pathSeparator + "report-html.html");
